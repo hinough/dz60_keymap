@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include <print.h>
 
 //Typedef for tapstate
 typedef struct {
@@ -24,7 +25,7 @@ enum {
 
 //Custom keycode for makro
 enum custom_keycodes {
-    WINSNIP                 //WINSNIP -> WIN + SHIFT + S
+    WINSNIP = 51711     //WINSNIP -> WIN + SHIFT + S
 };
 
 //Definisjoner på funksjoner
@@ -155,13 +156,16 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 
 //Makroer
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    dprintf("\nMACRO: %u pressed\n", keycode);
     switch(keycode) {
         case WINSNIP:                               //Dersom WINSNIP er tapped
+            dprint("\nMACRO: Case WINSNIP entered\n");
             if(record->event.pressed) {
                 SEND_STRING(SS_LGUI(SS_LSFT("s"))); //Trykker WIN + SHIFT + S
+                dprint("\nMACRO: Record Event Pressed\n");
             }
         break;
-
     }
+    dprint("\nMACRO: Returning\n");
     return true;
 }
